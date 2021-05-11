@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.UserAddressMapper">
+
+    <resultMap id="BaseMap" type="com.example.demo.entity.UserAddress">
+        <id property="id" column="id"/>
+        <result property="uId" column="u_id"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="provinces" column="provinces"/>
+        <result property="city" column="city"/>
+        <result property="region" column="region"/>
+        <result property="detailedAddress" column="detailed_address"/>
+    </resultMap>
+
+    <select id="selectUserAddressByUserId" resultMap="BaseMap">
+        SELECT id, u_id, name, phone, provinces, city, region, detailed_address
+        FROM user_address
+        WHERE is_del=0 AND u_id = #{uid};
+    </select>
+
+    <insert id="insertUserAddress">
+        INSERT INTO user_address(u_id, name, phone, provinces, city, region, detailed_address)
+        VALUES (#{address.uId},#{address.name},#{address.phone},#{address.provinces},
+                #{address.city},#{address.region},#{address.detailedAddress});
+    </insert>
+
+   
+</mapper>

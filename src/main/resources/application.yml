@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://119.23.237.187:3306/db_test?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库连接池 druid
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #最大连接池数量
+      max-active: 5
+      #配置获取连接等待超时的时间 单位毫秒
+      max-wait: 6000
+      #监控统计用的filter:stat日志用的filter:log4j防御sql注入的filter:wall
+      filters: stat,slf4j,wall
+      # 后台监控配置
+      web-stat-filter:
+        #开启后台性能检测
+        enabled: true
+        #拦截所有请求（访问接口就是对数据库的操作）
+        url-pattern: /*
+        #排除请求
+        exclusions: "*.js,*.css"
+      # StatViewServlet配置
+      stat-view-servlet:
+        #是否启用StatViewServlet默认值true
+        enabled: true
+        #是否设置重置按钮
+        reset-enable: false
+        url-pattern: /druid/*
+        login-username: root
+        login-password: root
+        #设置访问的白名单
+        allow: 127.0.0.1
+
+# 服务器配置
+server:
+  port: 8081
+  servlet:
+    context-path: /api
+  address: 127.0.0.1
+
+# mybatis 配置
+mybatis:
+  #如果是放在src/main/java目录下 classpath:/com/你的包名/*/mappers/*.xml
+  #如果放在 src/main/resources 下
+  mapper-locations: classpath:mapper/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.example.demo.entity
+  # settings 下的配置
+  configuration:
+    #日志
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+    #开启驼峰命名功能 其它的一些属性参考 mybatis-config.xml中的settings属性
+    map-underscore-to-camel-case: true
